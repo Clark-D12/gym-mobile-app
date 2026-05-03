@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fit-Buddy</title>
+    <link rel="stylesheet" href="css/gym.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGO -->
+    <div class="logo">
+        <img src="img/Capture-removebg-preview1.png">
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="actions">
+        <button class="btn login" onclick="openLogin()">LOG IN</button>
+
+        <a href="pages/signup.html">
+            <button class="btn signup">SIGN UP</button>
+        </a>
+    </div>
+
+    <!-- LOGIN CARD -->
+    <div class="login-card" id="logincard">
+
+        <form id="loginForm">
+
+            <input
+                    class="input-field"
+                    type="email"
+                    placeholder="Email"
+                    id="email"
+                    required
+            >
+
+            <div class="password-wrapper">
+
+                <input
+                        class="input-field"
+                        type="password"
+                        placeholder="Password"
+                        id="password"
+                        required
+                >
+
+                <img
+                        src="img/eye-slash-solid-full.svg"
+                        id="pass-icon"
+                        class="showpass"
+                        onclick="showPass()"
+                >
+
+            </div>
+
+            <a href="pages/forgotpass.html" class="forgot">Forgot Password?</a>
+
+            <button type="submit" class="primary-btn">LOG IN</button>
+
+            <!-- LOGIN MESSAGE -->
+            <div id="login-message" class="login-message"></div>
+
+            <div class="ques">
+                <p>
+                    Don't have an account?
+                    <a class="signupsis" href="pages/signup.html">Sign Up</a>
+                </p>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/gym.js"></script>
+
+</body>
+</html>

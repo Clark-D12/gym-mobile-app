@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../css/signup.css">
+</head>
+
+<body>
+<div class="container">
+    <div class="form">
+        <!-- SUCCESS SCREEN -->
+        <div id="signup-success" style="display:none; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding: 20px 10px;">
+            <div class="success-icon">🎉</div>
+            <h2 class="success-title">Account Created!</h2>
+            <p class="success-msg">Please check your email to verify your account before logging in.</p>
+            <div class="success-email-icon">📧</div>
+            <p class="success-redirect">Redirecting to login<span class="dots"></span></p>
+        </div>
+
+
+
+        <form id="signup-form">
+
+            <!-- STEP 1 -->
+            <div id="form-step-1" class="form-step">
+
+                <input type="email" placeholder="Email" id="email" required>
+                <div id="email-error" class="error hidden">Please enter a valid email address.</div>
+                <input type="text" placeholder="Username" id="username" required>
+
+                <div class="password">
+
+                    <div class="pwd-wrapper">
+                        <input type="password" placeholder="Password" id="password" minlength="6" required>
+                        <button type="button" class="toggle-icon" data-target="password">
+                            <img src="../img/eye-slash-solid-full.svg" alt="toggle password">
+                        </button>
+                    </div>
+
+                    <div class="pwd-wrapper">
+                        <input type="password" placeholder="Confirm Password" id="Confirmpassword" minlength="6" required>
+                        <button type="button" class="toggle-icon" data-target="Confirmpassword">
+                            <img src="../img/eye-slash-solid-full.svg" alt="toggle password">
+                        </button>
+                    </div>
+
+                    <div id="password-error" class="error hidden">
+                        Password does not match
+                    </div>
+
+                    <div class="nextbutton">
+                        <button type="button" id="nextbtn">NEXT</button>
+                    </div>
+
+                </div>
+
+                <div class="paragraph">
+                    <p>Already have an account? <a href="../gym.html">Login</a></p>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div id="form-step-2" class="form-step hidden">
+
+                <input type="number" placeholder="Age" id="age" min="18" max="150" required>
+
+                <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <input type="number" placeholder="Height (cm)" id="height" min="1" step="0.1" required>
+                <input type="number" placeholder="Weight (kg)" id="weight" min="1" step="0.1" required>
+
+                <div class="terms-check">
+                    <input type="checkbox" id="termsCheckbox">
+                    <label for="termsCheckbox">
+                        I agree to the <button type="button" class="terms-link-btn" onclick="openTermsModal()">Terms &amp; Conditions</button>
+                    </label>
+                </div>
+
+                <div class="nextbutton">
+                    <button type="button" id="backbtn">BACK</button>
+                    <!-- submit button -->
+                    <button type="submit" id="submitbtn" disabled>CREATE ACCOUNT</button>
+                </div>
+
+                <div class="paragraph">
+                    <p>Already have an account? <a href="../gym.html">Login</a></p>
+                </div>
+
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+<!-- TERMS & CONDITIONS MODAL -->
+<div class="tc-overlay" id="tcOverlay" onclick="closeTermsModal(event)">
+    <div class="tc-modal">
+
+        <div class="tc-modal-header">
+            <span>Terms &amp; Conditions</span>
+            <button type="button" class="tc-close" onclick="closeTermsModal()">&#x2715;</button>
+        </div>
+
+        <div class="tc-modal-body">
+            <p class="tc-meta">Last updated: June 1, 2025 &nbsp;&middot;&nbsp; Version 1.0</p>
+
+            <div class="tc-section">
+                <div class="tc-section-title">1. Acceptance of Terms</div>
+                <p>By creating an account and using <strong>Fit Buddy</strong>, you agree to be bound by these Terms and Conditions. If you do not agree, you may not use the app.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">2. Eligibility</div>
+                <p>You must be at least <strong>18 years old</strong> to register. By signing up, you confirm you meet this requirement and have the legal capacity to enter a binding agreement.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">3. Account Responsibilities</div>
+                <p>You agree to provide accurate information, keep your password secure, and be solely responsible for all activity under your account. Accounts with false information may be suspended.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">4. Health &amp; Safety Disclaimer</div>
+                <p>Fit Buddy provides fitness guidance for general wellness only. It is <strong>not a substitute for professional medical advice</strong>. Always consult a healthcare provider before starting any exercise program. Stop immediately if you feel pain or discomfort.</p>
+                <div class="tc-warning">&#x26A0;&#xFE0F; If you have a pre-existing medical condition, heart disease, or are pregnant, consult a doctor before using this app.</div>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">5. Data &amp; Privacy</div>
+                <p>We collect your email, username, age, gender, height, weight, workout logs, and feedback to provide the Fit Buddy service. Data is stored securely via Supabase. We do not sell your personal information. You may request data deletion via the Feedback page.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">6. Acceptable Use</div>
+                <p>You agree not to violate any laws, submit harmful content, attempt unauthorized access, or impersonate others. Violations may result in immediate account termination.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">7. Intellectual Property</div>
+                <p>All content in Fit Buddy — workouts, graphics, logos, and design — is the property of Fit Buddy. You may not copy or distribute any content without written permission.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">8. Limitation of Liability</div>
+                <p>Fit Buddy and its developers are not liable for any injury, health complications, or data loss arising from app use. The app is provided <strong>"as is"</strong> without warranties of any kind.</p>
+            </div>
+
+            <div class="tc-section">
+                <div class="tc-section-title">9. Changes to Terms</div>
+                <p>We may update these terms at any time. Continued use of Fit Buddy after changes constitutes acceptance of the revised terms.</p>
+            </div>
+        </div>
+
+        <div class="tc-modal-footer">
+            <button type="button" class="tc-decline-btn" onclick="closeTermsModal()">Close</button>
+            <button type="button" class="tc-accept-btn" onclick="acceptTermsFromModal()">I Agree</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function openTermsModal() {
+      document.getElementById('tcOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeTermsModal(e) {
+      if (e && e.type === 'click' && e.target !== document.getElementById('tcOverlay')) return;
+      document.getElementById('tcOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function acceptTermsFromModal() {
+      const cb = document.getElementById('termsCheckbox');
+      cb.checked = true;
+      document.getElementById('submitbtn').disabled = false;
+      document.getElementById('tcOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/signup.js"></script>
+</body>
+</html>

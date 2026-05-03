@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <link rel="stylesheet" href="../css/forgotpass.css">
+</head>
+
+<body>
+
+<div class="container">
+    <div class="form">
+
+        <!-- STEP 1 EMAIL -->
+        <div id="form-step-1" class="form-step">
+
+            <p class="form-title">Enter your email for verification code</p>
+
+            <input type="email" placeholder="Email" id="email" required>
+
+            <div class="sbtn">
+                <button type="button" id="sendBtn1">Send Code</button>
+            </div>
+
+        </div>
+
+
+        <!-- STEP 2 OTP -->
+        <div id="form-step-2" class="form-step hidden">
+
+            <p class="form-title">Enter Verification Code</p>
+
+            <div class="otp-boxes">
+
+                <input type="text" maxlength="1" class="otp">
+                <input type="text" maxlength="1" class="otp">
+                <input type="text" maxlength="1" class="otp">
+                <input type="text" maxlength="1" class="otp">
+                <input type="text" maxlength="1" class="otp">
+                <input type="text" maxlength="1" class="otp">
+
+            </div>
+
+            <div class="resend">
+
+                <span id="timer">Resend in 30s</span>
+                <button id="resendBtn" disabled>Resend Code</button>
+
+            </div>
+
+            <div class="sbtn">
+                <button type="button" id="sendBtn2">Verify</button>
+            </div>
+
+        </div>
+
+
+        <!-- STEP 3 PASSWORD -->
+        <div id="form-step-3" class="form-step hidden">
+
+            <p class="form-title">Change your Password</p>
+
+            <div class="password">
+
+                <div class="pwd-wrapper">
+                    <input type="password" id="password" placeholder="Password" minlength="6">
+                    <button type="button" class="toggle-icon" data-target="password">
+                        <img src="../img/eye-slash-solid-full.svg">
+                    </button>
+                </div>
+
+                <div class="pwd-wrapper">
+                    <input type="password" id="confirmpassword" placeholder="Confirm Password" minlength="6">
+                    <button type="button" class="toggle-icon" data-target="confirmpassword">
+                        <img src="../img/eye-slash-solid-full.svg">
+                    </button>
+                </div>
+
+                <div id="password-error" class="error hidden">
+                    Password does not match
+                </div>
+
+            </div>
+
+            <div class="sbtn">
+                <button type="button" id="sendBtn3" disabled>
+                    Update Password
+                </button>
+            </div>
+
+            <div id="success-msg" class="success hidden">
+                 Password changed successfully
+            </div>
+
+        </div>
+
+
+        <div class="para2">
+            <p>Already have an account?
+                <a href="../gym.html" class="login-link">Login</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/forgotpass.js"></script>
+
+</body>
+</html>

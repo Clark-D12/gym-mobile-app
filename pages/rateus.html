@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rate Us – Fit Buddy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/support.css">
+  <link rel="stylesheet" href="../css/nav.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <div class="phone">
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+      <button class="back-btn" onclick="history.back()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 18l-6-6 6-6"/>
+        </svg>
+      </button>
+      <div class="header-icon rose">
+        <img src="../img/rate us.png" alt="">
+      </div>
+      <h1>Rate Us</h1>
+      <p>Love Fit Buddy? Let us know!</p>
+    </header>
+
+    <!-- STAR RATING CARD -->
+    <div class="support-card">
+      <div class="rate-hero">
+        <div class="rate-emoji" id="rateEmoji">🤔</div>
+        <p class="rate-question" id="rateQuestion">How would you rate your experience?</p>
+      </div>
+
+      <div class="stars-row" id="starsRow">
+        <button class="star-btn" data-val="1" onclick="setRating(1)">★</button>
+        <button class="star-btn" data-val="2" onclick="setRating(2)">★</button>
+        <button class="star-btn" data-val="3" onclick="setRating(3)">★</button>
+        <button class="star-btn" data-val="4" onclick="setRating(4)">★</button>
+        <button class="star-btn" data-val="5" onclick="setRating(5)">★</button>
+      </div>
+
+      <p class="rate-label" id="rateLabel">Tap a star to rate</p>
+    </div>
+
+    <!-- REVIEW CARD -->
+    <div class="support-card" id="reviewCard" style="display:none;">
+      <label class="field-label">Leave a review <span class="optional">(optional)</span></label>
+      <textarea
+        id="reviewText"
+        class="support-textarea"
+        placeholder="Tell us what you love or what we can improve…"
+        rows="4"
+        maxlength="500"
+      ></textarea>
+      <div class="char-count"><span id="charCount">0</span> / 500</div>
+
+      <button class="submit-btn" onclick="submitRating()">
+        Submit Rating
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- THANK YOU CARD (shown after submit) -->
+    <div class="support-card thankyou-card" id="thankyouCard" style="display:none;">
+      <div class="thankyou-icon">🎉</div>
+      <h3>Thank you!</h3>
+      <p>Your rating helps us improve Fit Buddy for everyone. We really appreciate it!</p>
+      <button class="submit-btn" onclick="history.back()">Back to Account</button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <a href="homepage.html" class="nav-item" data-page="training">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 4v16M18 4v16M2 9h4M18 9h4M2 15h4M18 15h4M6 9h12M6 15h12"/>
+      </svg>
+      <span class="nav-label">Training</span>
+    </a>
+    <a href="report.html" class="nav-item" data-page="reports">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <path d="M8 17v-5M12 17V8M16 17v-3"/>
+      </svg>
+      <span class="nav-label">Reports</span>
+    </a>
+    <a href="profile.html" class="nav-item active" data-page="account">
+      <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="8" r="4"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+      </svg>
+      <span class="nav-label">Account</span>
+    </a>
+  </nav>
+
+  <script>
+    const SUPA_URL = "https://sgsncmwrepgpohzmvxfd.supabase.co";
+    const SUPA_KEY = "sb_publishable_YyRwaDLOiB6XGew3JEDqrA_oFFSkeM8";
+    const gym = window.supabase.createClient(SUPA_URL, SUPA_KEY);
+
+    let currentRating = 0;
+
+    const emojis    = ['😞','😕','😐','😊','🤩'];
+    const labels    = ['Poor','Fair','Good','Great','Excellent!'];
+    const questions = [
+      'We\'re sorry to hear that. What went wrong?',
+      'What could we do better?',
+      'Thanks! What could make it great?',
+      'Great! What do you love most?',
+      'Awesome! You\'re amazing! 🎉'
+    ];
+
+    function setRating(val) {
+      currentRating = val;
+
+      document.querySelectorAll('.star-btn').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.val) <= val);
+      });
+
+      document.getElementById('rateEmoji').textContent    = emojis[val - 1];
+      document.getElementById('rateLabel').textContent    = labels[val - 1];
+      document.getElementById('rateQuestion').textContent = questions[val - 1];
+
+      document.getElementById('reviewCard').style.display = 'block';
+    }
+
+    // Char counter
+    document.addEventListener('DOMContentLoaded', async () => {
+      const textarea = document.getElementById('reviewText');
+      if (textarea) {
+        textarea.addEventListener('input', () => {
+          document.getElementById('charCount').textContent = textarea.value.length;
+        });
+      }
+
+      // Load existing rating from Supabase if user already rated
+      try {
+        const { data: { session } } = await gym.auth.getSession();
+        if (session) {
+          const { data } = await gym
+            .from('ratings')
+            .select('rating, review')
+            .eq('user_id', session.user.id)
+            .maybeSingle();
+
+          if (data) {
+            setRating(data.rating);
+            if (data.review) {
+              document.getElementById('reviewText').value = data.review;
+              document.getElementById('charCount').textContent = data.review.length;
+            }
+          }
+        }
+      } catch (_) {
+        // No existing rating — use localStorage fallback
+        const saved = localStorage.getItem('fitbuddy_rating');
+        if (saved) setRating(parseInt(saved));
+      }
+    });
+
+    async function submitRating() {
+      if (!currentRating) return;
+
+      const submitBtn = document.querySelector('#reviewCard .submit-btn');
+      submitBtn.textContent = 'Saving…';
+      submitBtn.disabled    = true;
+
+      const review = document.getElementById('reviewText')?.value.trim() || '';
+
+      try {
+        // Auth check
+        const { data: { session } } = await gym.auth.getSession();
+        if (!session) {
+          window.location.href = '../gym.html';
+          return;
+        }
+
+        const userId = session.user.id;
+
+        // Upsert — one rating per user (update if they rated before)
+        const { error } = await gym
+          .from('ratings')
+          .upsert(
+            { user_id: userId, rating: currentRating, review: review },
+            { onConflict: 'user_id' }
+          );
+
+        if (error) throw error;
+
+        // Save locally too so the stars restore on next visit
+        localStorage.setItem('fitbuddy_rating', currentRating);
+
+        // Show thank you
+        document.getElementById('reviewCard').style.display    = 'none';
+        document.getElementById('thankyouCard').style.display  = 'block';
+        document.querySelector('.support-card').style.display  = 'none';
+
+      } catch (err) {
+        console.error('Rating save error:', err);
+        // Still show thank you — don't block the user
+        document.getElementById('reviewCard').style.display    = 'none';
+        document.getElementById('thankyouCard').style.display  = 'block';
+        document.querySelector('.support-card').style.display  = 'none';
+      } finally {
+        submitBtn.textContent = 'Submit Rating';
+        submitBtn.disabled    = false;
+      }
+    }
+  </script>
+
+</body>
+</html>
