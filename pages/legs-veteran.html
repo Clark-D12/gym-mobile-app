@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legs Veteran – Fit Buddy</title>
+  <link rel="stylesheet" href="../css/workout.css">
+</head>
+
+<body>
+<div class="app">
+
+  <!-- BANNER -->
+  <div class="workout-header">
+    <img src="../img/leg veteran.jpg" alt="Legs Veteran" class="workout-banner">
+  </div>
+
+  <!-- CONTENT -->
+  <div id="workout-content">
+
+    <h1>Legs Veteran</h1>
+
+    <div class="workout-stats">
+      <div class="stat-box">
+        <h3>15 mins</h3>
+        <p>Durations</p>
+      </div>
+      <div class="stat-box">
+        <h3>7</h3>
+        <p>Exercises</p>
+      </div>
+    </div>
+
+    <h2>Exercises</h2>
+
+    <!-- scrollable exercise list — touch/swipe to scroll -->
+    <div class="exercise-list" id="exerciseList">
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/jumping jack.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Jumping Jacks</p>
+          <span>00:30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Air Squat Exercise.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Air Squat</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Pistol Squat Exercise.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Pistol Squat</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Forward Lunges Alternating Exercise.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Forward Lunges Alternating</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Single-Leg Resistance Band Deadlift.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Single-Leg Resistance Band Deadlift</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Dumbbell Single-Leg.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Dumbbell Single Leg</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Standing Harmstring Curl.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Standing Hamstring Curl</p>
+          <span>x30</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="action-row">
+      <button class="back-button" onclick="history.back()">Cancel</button>
+      <button class="start-btn">START</button>
+    </div>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/workout.js"></script>
+</body>
+</html>

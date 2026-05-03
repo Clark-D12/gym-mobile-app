@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chest Master – Fit Buddy</title>
+  <link rel="stylesheet" href="../css/workout.css">
+</head>
+
+<body>
+<div class="app">
+
+  <!-- BANNER -->
+  <div class="workout-header">
+    <img src="../img/chest master.png" alt="Chest Master" class="workout-banner">
+  </div>
+
+  <!-- CONTENT -->
+  <div id="workout-content">
+
+    <h1>Chest Master</h1>
+
+    <div class="workout-stats">
+      <div class="stat-box">
+        <h3>30 mins</h3>
+        <p>Durations</p>
+      </div>
+      <div class="stat-box">
+        <h3>10</h3>
+        <p>Exercises</p>
+      </div>
+    </div>
+
+    <h2>Exercises</h2>
+
+    <!-- scrollable exercise list — touch/swipe to scroll -->
+    <div class="exercise-list" id="exerciseList">
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/jumping jack.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Jumping Jacks</p>
+          <span>01:00</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/incline push up.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Incline Push-up</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Band Bench Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Band Bench Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Band Chest Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Band Chest Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Barbell Incline Bench Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Barbell Incline Bench Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Barbell Bench Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Barbell Bench Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/incline push up.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Incline Push-up</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Band Bench Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Band Bench Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Band Chest Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Band Chest Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+      <div class="exercise-item">
+        <video class="exercise-video" autoplay loop muted playsinline>
+          <source src="../img/Barbell Incline Bench Press.mp4" type="video/mp4">
+        </video>
+        <div>
+          <p>Barbell Incline Bench Press</p>
+          <span>x30</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="action-row">
+      <button class="back-button" onclick="history.back()">Cancel</button>
+      <button class="start-btn">START</button>
+    </div>
+
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/workout.js"></script>
+</body>
+</html>
