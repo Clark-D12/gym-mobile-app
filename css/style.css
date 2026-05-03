@@ -1,0 +1,781 @@
+/* ── RESET ── */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+/* ── BODY: gradient always fills the full viewport ── */
+html {
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  background: linear-gradient(175deg, #0A2540 0%, #0E7490 50%, #5EEAD4 100%);
+  background-attachment: fixed;   /* gradient stays put while scrolling */
+  background-size: cover;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ── PHONE FRAME: transparent so body gradient shows through ── */
+.phone-frame {
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;       /* NO background here – body handles it */
+  position: relative;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 80px;
+  background: transparent;
+}
+
+/* ── WELCOME ROW ── */
+.welcome-row {
+  padding: 0 clamp(14px, 4vw, 20px) 4px;
+  font-size: clamp(12px, 3.2vw, 14px);
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+#welcomeUser {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* ── LOGO ── */
+.logo {
+  padding: clamp(14px, 4vw, 20px) clamp(14px, 4vw, 20px) 6px;
+  display: flex;
+  align-items: center;
+}
+.logo-img {
+  width: clamp(160px, 48vw, 230px);
+  height: clamp(54px, 15vw, 74px);
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* ── SEARCH BAR (homepage, tap to open overlay) ── */
+.search-container {
+  position: relative;
+  margin: 0 clamp(12px, 4vw, 20px) 10px;
+  cursor: pointer;
+}
+
+/* Frosted glass pill — very transparent on homepage */
+.search-bar {
+  width: 100%;
+  padding: clamp(11px, 3.2vw, 14px) clamp(14px, 4vw, 18px) clamp(11px, 3.2vw, 14px) 42px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 30px;
+  background: rgba(255,255,255,0.08);   /* very transparent */
+  color: rgba(255,255,255,0.75);
+  font-size: clamp(13px, 3.5vw, 15px);
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  cursor: pointer;
+  pointer-events: none;  /* clicks go to container */
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* hide browser native clear button */
+.search-bar::-webkit-search-cancel-button,
+.search-bar::-webkit-search-decoration { display: none; -webkit-appearance: none; }
+.search-bar::placeholder { color: rgba(255,255,255,0.45); }
+
+/* Search icon inside the pill */
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,0.5);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   HOMEPAGE BLUR OVERLAY
+   (blurs the page content when search opens)
+   ══════════════════════════════════════ */
+.page-blur {
+  transition: filter 0.3s ease;
+}
+.page-blur.blurred {
+  filter: blur(4px) brightness(0.5);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ══════════════════════════════════════
+   SEARCH OVERLAY – slides down from top
+   ══════════════════════════════════════ */
+.search-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  background: #0d2d4d;
+  transform: translateY(-100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+  max-height: 100vh;
+}
+.search-overlay.open {
+  transform: translateY(0);
+}
+
+/* ── Overlay top bar ── */
+.search-overlay-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(14px, 4vw, 18px);
+  border-bottom: 1px solid rgba(94,234,212,0.12);
+  flex-shrink: 0;
+}
+
+/* Input + icon + clear wrapped together */
+.search-input-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Search icon inside overlay input */
+.search-overlay-icon {
+  position: absolute;
+  left: 14px;
+  color: rgba(255,255,255,0.45);
+  font-size: 13px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.search-overlay-input {
+  width: 100%;
+  height: clamp(42px, 11vw, 50px);
+  padding: 0 40px 0 40px;   /* space for icon left + clear right */
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 30px;
+  background: rgba(255,255,255,0.07);
+  color: #fff;
+  font-size: clamp(13px, 3.8vw, 15px);
+  font-family: 'Poppins', sans-serif;
+  outline: none;
+  /* IMPORTANT: use type="text" in HTML, not type="search"
+     to prevent the browser drawing its own ✕ button */
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.search-overlay-input:focus {
+  border-color: #5EEAD4;
+  background: rgba(255,255,255,0.1);
+}
+.search-overlay-input::placeholder { color: rgba(255,255,255,0.3); }
+/* kill any browser native clear */
+.search-overlay-input::-webkit-search-cancel-button { display: none; }
+
+/* ✕ clear — our custom one, right inside input */
+.search-clear {
+  position: absolute;
+  right: 10px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: none;           /* hidden by default */
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.search-clear:hover { background: rgba(255,255,255,0.25); }
+.search-clear.visible { display: flex; }
+
+/* Cancel button */
+.search-cancel {
+  background: none; border: none;
+  color: #5EEAD4;
+  font-size: clamp(13px, 3.5vw, 14px);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 4px 0;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+.search-cancel:active { opacity: 0.6; }
+
+/* ── Results area ── */
+.search-results {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(10px, 3vw, 14px) clamp(14px, 4vw, 18px) 80px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-height: calc(100vh - 80px);
+}
+.search-results::-webkit-scrollbar { display: none; }
+
+/* ── Hint (empty state) ── */
+.search-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 20px 30px;
+  text-align: center;
+  gap: 10px;
+  color: rgba(255,255,255,0.28);
+}
+.search-hint svg {
+  width: 48px; height: 48px;
+  stroke: rgba(94,234,212,0.25);
+  fill: none; stroke-width: 1.5;
+  stroke-linecap: round; stroke-linejoin: round;
+  margin-bottom: 4px;
+}
+.search-hint strong {
+  font-size: clamp(14px, 4vw, 16px);
+  color: rgba(255,255,255,0.5);
+  font-weight: 700;
+}
+.search-hint span {
+  font-size: clamp(12px, 3vw, 13px);
+}
+
+/* ── Section label ── */
+.search-section-label {
+  font-size: clamp(10px, 2.8vw, 11px);
+  font-weight: 700;
+  color: #5EEAD4;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin: 16px 0 7px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(94,234,212,0.12);
+}
+.search-section-label:first-child { margin-top: 0; }
+
+/* ── Result row ── */
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 3vw, 13px);
+  padding: clamp(9px, 2.8vw, 12px);
+  border-radius: 14px;
+  text-decoration: none;
+  color: #fff;
+  margin-bottom: 6px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.search-result-item:hover  { background: rgba(94,234,212,0.09); border-color: rgba(94,234,212,0.2); }
+.search-result-item:active { transform: scale(0.98); }
+
+.search-result-thumb {
+  width: clamp(48px, 13vw, 60px);
+  height: clamp(48px, 13vw, 60px);
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.07);
+}
+
+.search-result-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.search-result-name {
+  font-size: clamp(13px, 3.5vw, 15px);
+  font-weight: 600; color: #fff;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.search-result-meta { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+
+.search-result-badge {
+  padding: 2px 9px; border-radius: 20px;
+  font-size: clamp(9px, 2.5vw, 10px); font-weight: 700; white-space: nowrap;
+}
+.search-result-badge.rookie  { background: rgba(94,234,212,0.15);  color: #5EEAD4; }
+.search-result-badge.veteran { background: rgba(14,116,144,0.3);   color: #7dd4e8; }
+.search-result-badge.master  { background: rgba(255,255,255,0.1);  color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+.search-result-badge.plan    { background: rgba(94,234,212,0.18);  color: #5EEAD4; }
+
+.search-result-detail { font-size: clamp(10px, 2.8vw, 12px); color: rgba(255,255,255,0.4); }
+
+.search-result-arrow {
+  width: 15px; height: 15px; flex-shrink: 0;
+  stroke: rgba(255,255,255,0.22); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ── No results ── */
+.search-no-results {
+  text-align: center; padding: 36px 20px;
+  color: rgba(255,255,255,0.35); font-size: clamp(13px, 3.5vw, 15px); line-height: 1.6;
+}
+.search-no-results strong { color: rgba(255,255,255,0.6); }
+
+/* ── STREAK CARD ── */
+.streak-card {
+  margin: 0 clamp(12px, 4vw, 20px) 14px;
+  background: rgba(0,0,0,0.25);
+  border-radius: 14px;
+  padding: clamp(12px, 3.5vw, 16px) clamp(14px, 4vw, 18px);
+  backdrop-filter: blur(4px);
+}
+.streak-header {
+  font-size: clamp(13px, 3.8vw, 15px);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+/* Track wrapper — the line sits here */
+.streak-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0;
+}
+
+/* Horizontal connecting line — full width behind all circles */
+.streak-track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+/* Every circle — same fixed size so the line aligns perfectly */
+.streak-circle {
+  position: relative;
+  z-index: 1;
+  width: clamp(26px, 7.5vw, 32px);
+  height: clamp(26px, 7.5vw, 32px);
+  border-radius: 50%;
+  background: #3a6070;   /* solid colour — no ring/outline effect */
+  border: none;
+  outline: none;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(9px, 2.5vw, 11px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.55);
+  flex-shrink: 0;
+}
+
+/* Completed days — yellow */
+.streak-circle.done {
+  background: #fbbf24;
+  border: none;
+  color: #7a4f00;
+}
+
+/* Current day — white, same size as others */
+.streak-circle.current {
+  background: #ffffff;
+  border: none;
+  color: #0A2540;
+  font-weight: 800;
+}
+
+/* ── PLANS SECTION ── */
+.plans-section, .categories-section {
+  padding: 0 clamp(12px, 4vw, 20px) 18px;
+}
+
+/* ── HORIZONTAL CAROUSEL WRAPPER ── */
+.plans-slider-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;          /* clip slides that are off-screen */
+  border-radius: 12px;
+}
+
+/* ── TRACK: slides sit side by side, translateX moves left/right ── */
+.plans-track {
+  display: flex;
+  flex-direction: row;       /* horizontal */
+  will-change: transform;
+  /* transition set by JS */
+}
+
+/* ── Each slide: full wrapper width, cards inside side by side ── */
+.plan-slide {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-shrink: 0;
+  width: 100%;               /* each slide = 100% of wrapper */
+  height: clamp(130px, 34vw, 185px);
+}
+
+/* Single-card slide (Full Body) */
+.plan-slide--single {
+  justify-content: stretch;
+}
+
+/* ── Plan cards ── */
+.plan-card {
+  flex: 1;
+  background: rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: background 0.2s;
+  min-width: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.plan-card:active {
+  background: rgba(0,0,0,0.35);
+}
+
+.plan-card img {
+  width: 100%;
+  flex: 1;
+  object-fit: cover;
+  display: block;
+  min-height: 0;
+  pointer-events: none;     /* prevent img from intercepting drag */
+}
+
+.plan-card p {
+  padding: 6px 10px 8px;
+  font-size: clamp(10px, 3vw, 13px);
+  font-weight: 600;
+  flex-shrink: 0;
+  line-height: 1.3;
+}
+
+/* Full-body card */
+.plan-card--full { flex: 1; }
+.plan-card--full img { flex: 1; }
+
+.plan-card-body {
+  padding: 6px 10px 8px;
+  flex-shrink: 0;
+}
+.plan-card-body p {
+  padding: 0;
+  font-size: clamp(10px, 3vw, 13px);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.plan-card-sub {
+  font-size: clamp(9px, 2.5vw, 11px);
+  color: rgba(255,255,255,0.65);
+}
+
+/* ── Dot indicators: horizontal, centred below carousel ── */
+.plans-dots {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+.plan-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: background 0.2s, width 0.25s, border-radius 0.25s;
+  display: block;
+  flex-shrink: 0;
+}
+.plan-dot.active {
+  background: #fff;
+  width: 20px;              /* pill shape on active dot */
+  border-radius: 4px;
+}
+
+/* ── CATEGORY BUTTONS ── */
+h2 { font-size: clamp(14px, 4vw, 17px); font-weight: 700; margin-bottom: 12px; }
+
+.category-buttons {
+  display: flex; gap: 6px;
+  margin-bottom: 12px; flex-wrap: wrap;
+}
+.cat-btn {
+  padding: 5px 12px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(11px, 3vw, 13px);
+  font-weight: 600;
+  white-space: nowrap; cursor: pointer;
+  transition: all 0.2s;
+}
+.cat-btn.active {
+  background: rgba(255,255,255,0.3);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* ── CATEGORIES GRID ── */
+.categories-grid { display: flex; flex-direction: column; gap: 10px; }
+
+.category-item {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(0,0,0,0.22);
+  padding: 11px; border-radius: 14px;
+  text-decoration: none; color: #fff; cursor: pointer;
+  transition: background 0.2s;
+}
+.category-item:hover { background: rgba(255,255,255,0.1); }
+
+.category-img {
+  width: clamp(68px, 20vw, 90px);
+  height: clamp(68px, 20vw, 90px);
+  border-radius: 10px; overflow: hidden; flex-shrink: 0;
+}
+.category-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.category-info { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; }
+.category-info span { font-size: clamp(12px, 3.5vw, 14px); font-weight: 600; }
+.workout-time { font-size: clamp(10px, 2.8vw, 12px); color: rgba(255,255,255,0.65); }
+.level { display: flex; gap: 3px; }
+.gym-icon { width: clamp(13px, 3.5vw, 16px); height: clamp(13px, 3.5vw, 16px); object-fit: contain; }
+
+
+/* ════════════════════════════════════════
+   WORKOUT PAGES  –  matches screenshot exactly
+   ════════════════════════════════════════ */
+
+/* White background for workout pages */
+body.workout-page {
+  background: #fff !important;
+  min-height: 100vh;
+}
+
+.workout-page .app {
+  background: #fff;
+  padding-bottom: 30px;
+  color: #111;
+}
+
+/* ── Banner image (top, object-position: top so face shows) ── */
+.workout-banner {
+  width: 100%;
+  height: clamp(180px, 48vw, 260px);
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* ── White content area ── */
+#workout-content {
+  background: #fff;
+  padding: clamp(14px, 4vw, 22px) clamp(16px, 4.5vw, 24px) 20px;
+  color: #111;
+}
+
+/* ── Title (bold, large) ── */
+#workout-content h1 {
+  font-size: clamp(22px, 6vw, 28px);
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+/* ── Stat boxes: two grey rounded cards side by side ── */
+.workout-stats {
+  display: flex;
+  gap: clamp(10px, 3vw, 16px);
+  margin-bottom: 22px;
+}
+
+.stat-box {
+  flex: 1;
+  background: #e3e3e3;
+  border-radius: 18px;
+  padding: clamp(14px, 4vw, 20px) 10px;
+  text-align: center;
+}
+
+.stat-box h3 {
+  font-size: clamp(16px, 4.5vw, 21px);
+  color: #111;
+  font-weight: 700;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.stat-box p {
+  font-size: clamp(10px, 2.8vw, 13px);
+  color: #888;
+  font-weight: 400;
+}
+
+/* ── "Exercises" heading ── */
+#workout-content h2 {
+  font-size: clamp(15px, 4.2vw, 18px);
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 12px;
+}
+
+/* ── Exercise list wrapper (scrollable) ── */
+.exercise-list {
+  position: relative;
+  max-height: 46vh;
+  overflow-y: auto;
+  padding-right: 28px;   /* room for scroll arrows */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.exercise-list::-webkit-scrollbar { display: none; }
+
+/* Scroll indicator arrows (right side) */
+.exercise-list::after {
+  content: '⌃\A⌄';
+  white-space: pre;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  font-weight: 900;
+  color: #555;
+  background: #e0e0e0;
+  border-radius: 6px;
+  padding: 4px 5px;
+  line-height: 1.2;
+  pointer-events: none;
+}
+
+/* ── Each exercise row ── */
+.exercise-item {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 4vw, 20px);
+  padding: clamp(12px, 3.5vw, 16px) 0;
+  border-bottom: 1px solid #ebebeb;
+  color: #111;
+}
+.exercise-item:last-of-type { border-bottom: none; }
+
+/* ── Thumbnail: rounded square ── */
+.exercise-video,
+.exercise-item img {
+  width: clamp(70px, 21vw, 92px);
+  height: clamp(70px, 21vw, 92px);
+  object-fit: cover;
+  border-radius: 14px;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+
+/* ── Text block: name bold, duration below centered ── */
+.exercise-item > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+}
+
+.exercise-item p {
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 600;
+  color: #111;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.exercise-item span {
+  font-size: clamp(12px, 3.5vw, 15px);
+  color: #777;
+  font-weight: 400;
+}
+
+/* ── Action row: Cancel (grey) + START (teal) ── */
+.action-row {
+  display: flex;
+  gap: clamp(12px, 3.5vw, 18px);
+  margin-top: clamp(18px, 5vw, 26px);
+  padding-bottom: 10px;
+}
+
+/* Cancel – light grey rounded pill */
+.back-button {
+  flex: 1;
+  height: clamp(50px, 13vw, 60px);
+  background: #d9d9d9;
+  color: #333;
+  border: none;
+  border-radius: 30px;
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.3px;
+}
+.back-button:hover { background: #bbb; }
+
+/* START – teal pill, uppercase, bold */
+.start-btn {
+  flex: 1;
+  height: clamp(50px, 13vw, 60px);
+  background: #0E7490;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: clamp(14px, 4vw, 17px);
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.start-btn:hover { background: #0a5a71; }
+
+@media (min-width: 600px) {
+  .phone-frame {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .bottom-nav {
+    /* still full width on tablet */
+    left: 0; right: 0;
+  }
+}
+
+@media (min-width: 900px) {
+  .phone-frame {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
